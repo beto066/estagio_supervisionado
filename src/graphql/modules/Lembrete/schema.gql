@@ -1,0 +1,9 @@
+type Lembrete {
+  id : Int
+  descricao : String
+  prioridade : Boolean
+}
+
+type Query {
+  lembretesContato(idContato : Int) : [Lembrete]
+}

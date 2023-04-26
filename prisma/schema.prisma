@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:postgres@localhost:7777/chard?schema=public"
+}
+
+model Users {
+  id              Int             @id @default(autoincrement())
+  nome            String
+  email           String          @unique
+  senha           String
+  perfil          Int             @default(1)
+  ativo           Boolean         @default(true)
+  notfiEnviadas   Notificacoes[]  @relation("EmissorNotificacao")
+  notfiRecebidas  Notificacoes[]  @relation("ReceptorNotificacao")
+  traFeitas       Transacoes[]    @relation("EmissorTransacao")
+  treRecebidas    Transacoes[]    @relation("ReceptorTransacao")
+  contatos1       Contatos[]      @relation("UsuarioContato1")
+  contatos2       Contatos[]      @relation("UsuarioContato2")
+}
+
+model Notificacoes {
+  id          Int       @id @default(autoincrement())
+  titulo      String
+  descricao   String?
+  data        DateTime
+  visualizado Boolean   @default(false)
+  ativo       Boolean   @default(true)
+  emissor     Users     @relation("EmissorNotificacao", fields: [idEmissor], references: [id])
+  receptor    Users     @relation("ReceptorNotificacao", fields: [idReceptor], references: [id])
+  idEmissor   Int
+  idReceptor  Int
+}
+
+model Transacoes {
+  id          Int       @id @default(autoincrement())
+  descricao   String?  
+  valor       Float
+  confirmado  Boolean   @default(false)
+  data        DateTime
+  ativo       Boolean   @default(true)
+  emissor     Users     @relation("EmissorTransacao", fields: [idEmissor], references: [id])
+  receptor    Users     @relation("ReceptorTransacao", fields: [idReceptor], references: [id])
+  idEmissor   Int
+  idReceptor  Int
+}
+
+model Contatos {
+  id        Int         @id @default(autoincrement())
+  ativo     Boolean     @default(true)
+  lembretes Lembretes[]
+  user1     Users       @relation("UsuarioContato1", fields: [idUser1], references: [id])
+  user2     Users       @relation("UsuarioContato2", fields: [idUser2], references: [id])
+  idUser1   Int
+  idUser2   Int
+}
+
+model Lembretes {
+  id          Int       @id @default(autoincrement())
+  descricao   String
+  prioridade  Boolean   @default(false)
+  ativo       Boolean   @default(true)
+  contato     Contatos  @relation(fields: [idContato], references: [id])
+  idContato   Int
+}

@@ -1,0 +1,15 @@
+type Contato {
+  id : Int
+  lembretes : [Lembrete]
+  usuario1 : User
+  usuario2 : User
+}
+
+type Query {
+  contatosUsuario(idUsuario : Int) : [Contato]
+  procurarContato(pesquisa : String) : [Contato]
+}
+
+type Mutation {
+  confirmarContato(idContato : Int) : [Contato]
+}

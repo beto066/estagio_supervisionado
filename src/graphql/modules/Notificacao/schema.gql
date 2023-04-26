@@ -1,0 +1,14 @@
+type Notificacao {
+  id : Int
+  titulo : String
+  descricao : String
+  data : String
+  visualizado : Boolean
+  emissor : User
+  receptor : User
+}
+
+type Query {
+  notificacoesUsuario(idUsuario : Int) :  [Notificacao]
+  visualizarNotificacao(id : Int) : Notificacao
+}

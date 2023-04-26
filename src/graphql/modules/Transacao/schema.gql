@@ -1,0 +1,25 @@
+type Transacao {
+  id : Int
+  descricao : String
+  valor : Float
+  confirmado : Boolean
+  data : String
+  emissor : User
+  receptor : User
+}
+
+type Query {
+  transacoesUsuario(idUsuario : Int) : [Transacao]
+}
+
+input TransacaoInput {
+  descricao : String, 
+  valor : Float,
+  idEmissor : Int,
+  idReceptor : Int
+}
+
+type Mutation {
+  realizarTransacao(data : TransacaoInput) : Transacao
+  confirmarTransacao(idTransacao : Int) : Transacao
+}

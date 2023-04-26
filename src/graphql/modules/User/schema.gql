@@ -1,0 +1,32 @@
+type User {
+  id : Int
+  nome : String
+  email : String
+  perfil : String
+}
+
+input CreateUserInput {
+  nome : String!
+  email : String!
+  senha : String!
+}
+
+input UpdateUserInput {
+  nome : String
+  email : String
+  senha : String
+}
+
+type Query {
+  usuarios : [User]
+  usuario(id : Int) : User
+  pesquisaUsuario(pesquisa : String) : [User]
+}
+
+type Mutation {
+  cadastrarUsuario(data : CreateUserInput) : User!
+  atualizarUsuario(id : Int!, data : UpdateUserInput) : User!
+  deletarUsuario(id : Int!) : Boolean
+  editarSenha(id : Int!, senha : String) : User
+  logar(id : Int) : User
+}
