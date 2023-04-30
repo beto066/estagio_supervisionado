@@ -5,11 +5,14 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { resolvers, typeDefs } from './src/graphql/modules/index.js'
 import { db } from './src/db/index.js';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-console.log(__dirname)
+// console.log(__dirname)
 
 const server = new ApolloServer({
   typeDefs,
@@ -25,6 +28,10 @@ const server = new ApolloServer({
 
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
-});
+})
 
 console.log(`🚀  Server ready at: ${url}`);
+
+
+
+

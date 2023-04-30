@@ -7,23 +7,8 @@ const resolvers = {
   },
 
   Mutation: {
-    async realizarTransacao(_, {data}) {
-      const novaTransacao = await transacaoDb.realizarTransacao(data);
-    
-      if (!!novaTransacao){
-        const novaNotificacao = notificacaoDb.enviarNotificacao(
-          novaTransacao.descricao, 
-          novaTransacao.idEmissor, 
-          novaTransacao.idReceptor
-        );
-      
-        if (!!novaNotificacao){
-          return novaTransacao;
-        }
-
-        console.log(novaNotificacao);
-      }
-      return null;
+    async realizarTransacao(_, {data, usuario1}) {
+      return await transacaoDb.realizarTransacao(data);
     },
 
     async confirmarTransacao(_, { idTransacao }){

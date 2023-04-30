@@ -2,8 +2,21 @@ type Lembrete {
   id : Int
   descricao : String
   prioridade : Boolean
+  contato : Contato
 }
 
 type Query {
   lembretesContato(idContato : Int) : [Lembrete]
+}
+
+input LembreteInput {
+  descricao : String,
+  prioridade : Boolean
+  idContato : Int
+}
+
+type Mutation {
+  adcionarLembrete(data : LembreteInput) : Lembrete
+  editarLembrete(idLembrete : Int, data : LembreteInput) : Lembrete
+  deletarLembrete(idLembrete : Int) : Boolean
 }

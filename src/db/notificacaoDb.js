@@ -1,10 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import { util } from '../../src/util/index.js';
-
-const prisma = new PrismaClient();
 
 const notificacaoDb = {
   async getByReceptor(userId){
+    const prisma = new PrismaClient();
+
     return await prisma.notificacoes.findMany({
       where : {
         idReceptor : userId
@@ -13,22 +12,15 @@ const notificacaoDb = {
         emissor : true,
         receptor : true
       }
-    });
-  },
-
-  async enviarNotificacao(descricao, idEmissor, idReceptor) {
-    return await prisma.notificacoes.create({
-      data : {
-        titulo : "O " + util.getUsuarioLogadoTest().nome + " solicitou uma transação",
-        descricao : descricao,
-        data : util.getDataNow(),
-        idEmissor : idEmissor,
-        idReceptor : idReceptor
-      }
+    }).then(async (retorno) => {
+      prisma.$disconnect();
+      return retorno;
     });
   },
 
   async visualizarNotificacao(id){
+    const prisma = new PrismaClient();
+
     return await prisma.notificacoes.update({
       data : {
         visualizado : true
@@ -40,6 +32,9 @@ const notificacaoDb = {
         emissor : true,
         receptor : true
       }
+    }).then(async (retorno) => {
+      prisma.$disconnect();
+      return retorno;
     });
   }
 }

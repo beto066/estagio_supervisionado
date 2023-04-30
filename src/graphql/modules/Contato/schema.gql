@@ -1,5 +1,6 @@
 type Contato {
   id : Int
+  confirmado : Boolean
   lembretes : [Lembrete]
   usuario1 : User
   usuario2 : User
@@ -7,9 +8,18 @@ type Contato {
 
 type Query {
   contatosUsuario(idUsuario : Int) : [Contato]
-  procurarContato(pesquisa : String) : [Contato]
+  procurarContato(pesquisa : String, usuario1 : UsuarioLogadoInput) : [Contato]
+}
+
+input ContatoInput {
+  idUsuario1 : Int,
+  idUsuario2 : Int,
+  nomeUsuario1 : String
+  descricao : String
 }
 
 type Mutation {
-  confirmarContato(idContato : Int) : [Contato]
+  confirmarContato(idContato : Int) : Contato
+  negarContato(idContato : Int) : Boolean
+  adcionarContato(data : ContatoInput) : Contato
 }

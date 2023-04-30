@@ -16,7 +16,8 @@ input TransacaoInput {
   descricao : String, 
   valor : Float,
   idEmissor : Int,
-  idReceptor : Int
+  idReceptor : Int,
+  nomeEmissor : String
 }
 
 type Mutation {

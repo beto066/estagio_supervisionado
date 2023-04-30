@@ -1,14 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import { util } from './src/util/index.js';
+import { connect } from 'http2';
 
 const prisma = new PrismaClient()
 
 async function main() {
   // createUsers();
   // createTransacoes();
-  // createNotificacoes();
   // createContatos();
-  // createLembretes();
+  createLembretes();
 };
 
 async function createLembretes() {
@@ -42,89 +42,125 @@ async function createLembretes() {
 async function createContatos(){
   await prisma.contatos.create({
     data : {
-      idUser1 : 3,
-      idUser2 : 1,
+      notificacao : {
+        create : {
+          titulo : 'Carla deseja se tornar um de seus contatos',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          idEmissor : 4,
+          idReceptor : 3
+        }
+      },
+      user1 : {
+        connect : {
+          id : 3
+        }
+      },
+      user2 : {
+        connect : {
+          id : 4
+        }
+      },
     }
   });
 
   await prisma.contatos.create({
     data : {
-      idUser1 : 2,
-      idUser2 : 1,
+      user1 : {
+        connect : {
+          id : 2
+        }
+      },
+      user2 : {
+        connect : {
+          id : 1
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Beatriz deseja se tornar um de seus contatos',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 4,
+          idReceptor : 3
+        }
+      }
     }
   });
 
   await prisma.contatos.create({
     data : {
-      idUser1 : 4,
-      idUser2 : 1,
+      user1 : {
+        connect : {
+          id : 4
+        }
+      },
+      user2 : {
+        connect : {
+          id : 1
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Daniele deseja se tornar um de seus contatos',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 4,
+          idReceptor : 3
+        }
+      }
     }
   });
 
   await prisma.contatos.create({
     data : {
-      idUser1 : 3,
-      idUser2 : 2,
+      user1 : {
+        connect : {
+          id : 3
+        }
+      },
+      user2 : {
+        connect : {
+          id : 2
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Carla deseja se tornar um de seus contatos',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 4,
+          idReceptor : 3
+        }
+      }
     }
   });
 
   await prisma.contatos.create({
     data : {
-      idUser1 : 2,
-      idUser2 : 5,
-    }
-  });
-}
-
-async function createNotificacoes(){
-  await prisma.notificacoes.create({
-    data : {
-      titulo : 'Titulo',
-      descricao : 'teste1',
-      data : util.getDataNow(),
-      visualizado : false,
-      idEmissor : 4,
-      idReceptor : 3
-    }
-  });
-  await prisma.notificacoes.create({
-    data : {
-      titulo : 'Titulo',
-      descricao : 'teste2',
-      data : util.getDataNow(),
-      visualizado : true,
-      idEmissor : 1,
-      idReceptor : 3
-    }
-  });
-  await prisma.notificacoes.create({
-    data : {
-      titulo : 'Titulo',
-      descricao : 'teste3',
-      data : util.getDataNow(),
-      visualizado : false,
-      idEmissor : 2,
-      idReceptor : 3
-    }
-  });
-  await prisma.notificacoes.create({
-    data : {
-      titulo : 'Titulo',
-      descricao : 'teste3',
-      data : util.getDataNow(),
-      visualizado : false,
-      idEmissor : 3,
-      idReceptor : 2
-    }
-  });
-  await prisma.notificacoes.create({
-    data : {
-      titulo : 'Titulo',
-      descricao : 'teste3',
-      data : util.getDataNow(),
-      visualizado : false,
-      idEmissor : 4,
-      idReceptor : 2
+      user1 : {
+        connect : {
+          id : 2
+        }
+      },
+      user2 : {
+        connect : {
+          id : 5
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Beatriz deseja se tornar um de seus contatos',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 2,
+          idReceptor : 5
+        }
+      }
     }
   });
 }
@@ -135,8 +171,26 @@ async function createTransacoes(){
       descricao : "teste",
       valor : 3.99,
       data : util.getDataNow(),
-      idEmissor : 3,
-      idReceptor : 1,
+      emissor : {
+        connect : {
+          id : 3
+        }
+      },
+      receptor : {
+        connect : {
+          id : 1
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Carla solicitou uma transacao',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 3,
+          idReceptor : 1
+        }
+      }
     }
   });
   await prisma.transacoes.create({
@@ -144,8 +198,26 @@ async function createTransacoes(){
       descricao : "teste",
       valor : 3.99,
       data : util.getDataNow(),
-      idEmissor : 3,
-      idReceptor : 1,
+      emissor : {
+        connect : {
+          id : 4
+        }
+      },
+      receptor : {
+        connect : {
+          id : 3
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Carla solicitou uma transacao',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 4,
+          idReceptor : 3
+        }
+      }
     }
   });
   await prisma.transacoes.create({
@@ -153,8 +225,26 @@ async function createTransacoes(){
       descricao : "teste2",
       valor : 5.99,
       data : util.getDataNow(),
-      idEmissor : 1,
-      idReceptor : 2,
+      emissor : {
+        connect : {
+          id : 1
+        }
+      },
+      receptor : {
+        connect : {
+          id : 2
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Alice solicitou uma transacao',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 1,
+          idReceptor : 2
+        }
+      }
     }
   });
   await prisma.transacoes.create({
@@ -162,8 +252,26 @@ async function createTransacoes(){
       descricao : "teste3",
       valor : 9.99,
       data : util.getDataNow(),
-      idEmissor : 2,
-      idReceptor : 4,
+      emissor : {
+        connect : {
+          id : 2
+        }
+      },
+      receptor : {
+        connect : {
+          id : 4
+        }
+      },
+      notificacao : {
+        create : {
+          titulo : 'Beatriz solicitou uma transacao',
+          descricao : 'teste1',
+          data : util.getDataNow(),
+          visualizado : false,
+          idEmissor : 2,
+          idReceptor : 4
+        }
+      }
     }
   });
 }

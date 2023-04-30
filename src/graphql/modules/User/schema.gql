@@ -17,6 +17,14 @@ input UpdateUserInput {
   senha : String
 }
 
+input UsuarioLogadoInput{
+  id : Int
+  nome : String
+  email : String
+  perfil : String
+}
+
+
 type Query {
   usuarios : [User]
   usuario(id : Int) : User
