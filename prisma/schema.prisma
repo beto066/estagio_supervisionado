@@ -8,12 +8,13 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:postgres@localhost:7777/chard?schema=public"
+  url      =  env("DATABASE_URL")
 }
 
 model Users {
   id              Int             @id @default(autoincrement())
   nome            String
+  userName        String          @unique
   email           String          @unique
   senha           String
   perfil          Int             @default(1)

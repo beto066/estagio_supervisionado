@@ -5,10 +5,10 @@ import { connect } from 'http2';
 const prisma = new PrismaClient()
 
 async function main() {
-  // createUsers();
+  createUsers();
   // createTransacoes();
   // createContatos();
-  createLembretes();
+  // createLembretes();
 };
 
 async function createLembretes() {
@@ -280,6 +280,7 @@ async function createUsers(){
   await prisma.users.create({
     data : {
       nome: 'Aline',
+      userName : 'Aline',
       email : 'aline@mail.com',
       senha : util.getHash('1234'),
       perfil : 1
@@ -288,6 +289,7 @@ async function createUsers(){
   await prisma.users.create({
     data : {
       nome: 'Beatriz',
+      userName : 'Biazinha',
       email : 'bia@mail.com',
       senha : util.getHash('1234'),
       perfil : 1
@@ -296,6 +298,7 @@ async function createUsers(){
   await prisma.users.create({
     data : {
       nome: 'Carla',
+      userName : 'Carlota',
       email : 'carla@mail.com',
       senha : util.getHash('1234'),
       perfil : 1
@@ -304,6 +307,7 @@ async function createUsers(){
   await prisma.users.create({
     data : {
       nome: 'Daniele',
+      userName : 'DaniLoka',
       email : 'dani@mail.com',
       senha : util.getHash('1234'),
       perfil : 2
@@ -312,6 +316,7 @@ async function createUsers(){
   await prisma.users.create({
     data : {
       nome: 'Aline dos reis',
+      userName : 'Aline_Oficial',
       email : 'carça@mail.com',
       senha : util.getHash('1234'),
       perfil : 1

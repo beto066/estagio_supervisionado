@@ -49,11 +49,32 @@ const userDb = {
     });
   },
 
-  async cadastrarUsuario(user){
+  async cadastrarUsuario(user, userName, senha){
     const prisma = new PrismaClient();
     
-    return await prisma.users.create({data : user}).then(async (retorno) => {
+    return await prisma.users.create({
+      data : {
+        nome : user.nome,
+        email : user.email,
+        userName : userName,
+        senha : senha
+      }
+    }).then(async (retorno) => {
       await prisma.$disconnect();
+      return retorno;
+    });
+  },
+
+  async logar(userName, senha){
+    const prisma = new PrismaClient();
+
+    return await prisma.users.findUnique({
+      where : {
+        userName : userName,
+      }
+    }).then(async (retorno) => {
+      await prisma.$disconnect();
+
       return retorno;
     });
   },
