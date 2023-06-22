@@ -5,10 +5,10 @@ import { connect } from 'http2';
 const prisma = new PrismaClient()
 
 async function main() {
-  createUsers();
-  // createTransacoes();
-  // createContatos();
-  // createLembretes();
+  await createUsers();
+  createTransacoes();
+  await createContatos();
+  createLembretes();
 };
 
 async function createLembretes() {
@@ -61,6 +61,7 @@ async function createContatos(){
           id : 4
         }
       },
+      confirmado : true,
     }
   });
 
@@ -76,14 +77,15 @@ async function createContatos(){
           id : 1
         }
       },
+      confirmado : true,
       notificacao : {
         create : {
           titulo : 'Beatriz deseja se tornar um de seus contatos',
           descricao : 'teste1',
           data : util.getDataNow(),
           visualizado : false,
-          idEmissor : 4,
-          idReceptor : 3
+          idEmissor : 2,
+          idReceptor : 1
         }
       }
     }
@@ -101,6 +103,7 @@ async function createContatos(){
           id : 1
         }
       },
+      confirmado : true,
       notificacao : {
         create : {
           titulo : 'Daniele deseja se tornar um de seus contatos',
@@ -108,7 +111,7 @@ async function createContatos(){
           data : util.getDataNow(),
           visualizado : false,
           idEmissor : 4,
-          idReceptor : 3
+          idReceptor : 1
         }
       }
     }
@@ -126,14 +129,15 @@ async function createContatos(){
           id : 2
         }
       },
+      confirmado : true,
       notificacao : {
         create : {
           titulo : 'Carla deseja se tornar um de seus contatos',
           descricao : 'teste1',
           data : util.getDataNow(),
           visualizado : false,
-          idEmissor : 4,
-          idReceptor : 3
+          idEmissor : 3,
+          idReceptor : 2
         }
       }
     }
@@ -151,6 +155,7 @@ async function createContatos(){
           id : 5
         }
       },
+      confirmado : true,
       notificacao : {
         create : {
           titulo : 'Beatriz deseja se tornar um de seus contatos',
@@ -171,9 +176,10 @@ async function createTransacoes(){
       descricao : "teste",
       valor : 3.99,
       data : util.getDataNow(),
+      confirmado : true,
       emissor : {
         connect : {
-          id : 3
+          id : 4
         }
       },
       receptor : {
@@ -187,7 +193,7 @@ async function createTransacoes(){
           descricao : 'teste1',
           data : util.getDataNow(),
           visualizado : false,
-          idEmissor : 3,
+          idEmissor : 4,
           idReceptor : 1
         }
       }
@@ -198,14 +204,15 @@ async function createTransacoes(){
       descricao : "teste",
       valor : 3.99,
       data : util.getDataNow(),
+      confirmado : true,
       emissor : {
         connect : {
-          id : 4
+          id : 5
         }
       },
       receptor : {
         connect : {
-          id : 3
+          id : 2
         }
       },
       notificacao : {
@@ -225,6 +232,7 @@ async function createTransacoes(){
       descricao : "teste2",
       valor : 5.99,
       data : util.getDataNow(),
+      confirmado : true,
       emissor : {
         connect : {
           id : 1
@@ -249,17 +257,18 @@ async function createTransacoes(){
   });
   await prisma.transacoes.create({
     data : {
-      descricao : "teste3",
-      valor : 9.99,
+      descricao : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      valor : 39.99,
       data : util.getDataNow(),
+      confirmado : true,
       emissor : {
         connect : {
-          id : 2
+          id : 1
         }
       },
       receptor : {
         connect : {
-          id : 4
+          id : 2
         }
       },
       notificacao : {

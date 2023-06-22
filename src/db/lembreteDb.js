@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from './index.js';
 
 const lembreteDb = {
   async getByContato(idContato){
-    const prisma = new PrismaClient();
-
     return await prisma.lembretes.findMany({
       where : {
         idContato : idContato,
@@ -24,8 +22,6 @@ const lembreteDb = {
   },
 
   async adcionarLembrete(lembrete){
-    const prisma = new PrismaClient();
-
     return await prisma.lembretes.create({
       data : {
         descricao : lembrete.descricao,
@@ -47,8 +43,6 @@ const lembreteDb = {
   },
 
   async editarLembrete(idLembrete, lembrete) {
-    const prisma = new PrismaClient();
-
     return await prisma.lembretes.update({
       where : {
         id : idLembrete
@@ -70,8 +64,6 @@ const lembreteDb = {
   },
 
   async removerLembrete(idLembrete) {
-    const prisma = new PrismaClient();
-
     return await prisma.lembretes.update({
       where : {
         id : idLembrete

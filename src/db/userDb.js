@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from './index.js';
 
 const userDb = {
   async usuarios(){
-    const prisma = new PrismaClient();
-
     await prisma.users.findMany().then(async (retorno) => {
       await prisma.$disconnect();
       return retorno;
@@ -11,8 +9,6 @@ const userDb = {
   },
 
   async findById(id){
-    const prisma = new PrismaClient();
-
     return await prisma.users.findUnique({
       where : {
         id : id
@@ -24,8 +20,6 @@ const userDb = {
   },
 
   async searchByNomeOrEmail(pesquisa){
-    const prisma = new PrismaClient();
-
     return await prisma.users.findMany({
       where : {
         OR : [
@@ -50,8 +44,6 @@ const userDb = {
   },
 
   async cadastrarUsuario(user, userName, senha){
-    const prisma = new PrismaClient();
-    
     return await prisma.users.create({
       data : {
         nome : user.nome,
@@ -66,8 +58,6 @@ const userDb = {
   },
 
   async logar(userName, senha){
-    const prisma = new PrismaClient();
-
     return await prisma.users.findUnique({
       where : {
         userName : userName,
@@ -80,8 +70,6 @@ const userDb = {
   },
 
   async atualizarUsuario(id, user) {
-    const prisma = new PrismaClient();
-    
     return await prisma.users.update({
       data: user,
       where : {
@@ -94,8 +82,6 @@ const userDb = {
   },
 
   async deletarUsuario(id) {
-    const prisma = new PrismaClient();
-    
     return await prisma.users.update({
       where : {
         id : id

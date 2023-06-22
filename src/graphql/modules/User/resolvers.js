@@ -4,8 +4,6 @@ import { util } from '../../../util/index.js';
 import jwt from 'jsonwebtoken';
 import { env } from "process";
 
-// console.log(util)
-
 const resolvers = { 
   Query : {
     usuarios : userDb.usuarios,
@@ -37,8 +35,6 @@ const resolvers = {
           },
           process.env.SECRET_API
         );
-
-        console.log(process.env.SECRET_API);
 
         return token;
       }

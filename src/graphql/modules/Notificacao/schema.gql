@@ -5,10 +5,15 @@ type Notificacao {
   data : String
   visualizado : Boolean
   emissor : User
-  receptor : User
+  transacao : Transacao
+  contato : Contato
 }
 
 type Query {
-  notificacoesUsuario(idUsuario : Int) :  [Notificacao]
+  notificacoesUsuario :  [Notificacao]
   visualizarNotificacao(id : Int) : Notificacao
+}
+
+type Subscription {
+  notificacaoCriada : Notificacao
 }

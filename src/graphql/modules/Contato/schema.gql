@@ -2,13 +2,13 @@ type Contato {
   id : Int
   confirmado : Boolean
   lembretes : [Lembrete]
-  usuario1 : User
-  usuario2 : User
+  outroUsuario : User
+  saldoComUsuario : Float
 }
 
 type Query {
-  contatosUsuario(idUsuario : Int) : [Contato]
-  procurarContato(pesquisa : String, usuario1 : UsuarioLogadoInput) : [Contato]
+  contatosUsuario : [Contato]
+  procurarContato(pesquisa : String) : [Contato]
 }
 
 input ContatoInput {

@@ -4,20 +4,21 @@ type Transacao {
   valor : Float
   confirmado : Boolean
   data : String
-  emissor : User
-  receptor : User
+  remetente : User
+  destinatario : User
 }
 
 type Query {
-  transacoesUsuario(idUsuario : Int) : [Transacao]
+  transacoesUsuario(quant : Int!, pesquisa : String) : [Transacao]
+  transacoesComUsuario(idUsuario : Int) : [Transacao]
+  findTransacao(idTransacao : Int) : Transacao
 }
 
 input TransacaoInput {
   descricao : String, 
-  valor : Float,
-  idEmissor : Int,
-  idReceptor : Int,
-  nomeEmissor : String
+  valor : Float!,
+  idReceptor : Int!,
+  data : String
 }
 
 type Mutation {

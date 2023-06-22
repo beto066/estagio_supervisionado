@@ -1,22 +1,47 @@
-import { PrismaClient } from '@prisma/client';
 import { util } from '../util/index.js';
+import { prisma } from './index.js';
 
 const contatoDb = {
   async getByUsuario(idUsuario) {
-    const prisma = new PrismaClient();
-
     return await prisma.contatos.findMany({
       where : {
         OR : [
           { idUser1 : idUsuario },
           { idUser2 : idUsuario },
         ],
+        confirmado : true
       },
       include : {
-        user1 : true,
-        user2 : true,
+        user1 : {
+          include : { 
+            traFeitas : {
+              where : {
+                confirmado : true
+              }
+            },
+            treRecebidas : {
+              where : {
+                confirmado : true
+              }
+            }
+          }
+        },
+        user2 : {
+          include : { 
+            traFeitas : {
+              where : {
+                confirmado : true
+              }
+            },
+            treRecebidas : {
+              where : {
+                confirmado : true
+              }
+            }
+          }
+        },
         lembretes : true
-      }
+      },
     }).then(async (retorno) => {
       await prisma.$disconnect();
       return retorno;
@@ -24,8 +49,6 @@ const contatoDb = {
   },
 
   async pesquisaByEmailOrNomeUsuario(pesquisa, idUsuarioLogado){
-    const prisma = new PrismaClient();
-
     return await prisma.contatos.findMany({
       where : {
         OR : [
@@ -66,16 +89,43 @@ const contatoDb = {
                 } // NOT
               },
               {
-                idUser2 : idUsuarioLogado
+                idUser1 : idUsuarioLogado
               }
             ] // AND
           }
         ], // OR
+        confirmado : true
       },
       include : {
-        user1 : true,
-        user2 : true,
-      }
+        user1 : {
+          include : { 
+            traFeitas : {
+              where : {
+                confirmado : true
+              }
+            },
+            treRecebidas : {
+              where : {
+                confirmado : true
+              }
+            }
+          }
+        },
+        user2 : {
+          include : { 
+            traFeitas : {
+              where : {
+                confirmado : true
+              }
+            },
+            treRecebidas : {
+              where : {
+                confirmado : true
+              }
+            }
+          }
+        },
+      } // include
     }).then(async (retorno) => {
       await prisma.$disconnect();
       return retorno;
@@ -83,8 +133,6 @@ const contatoDb = {
   },
 
   async AdcionarContato(contato){
-    const prisma = new PrismaClient();
-
     return await prisma.contatos.create({
       data : {
         user1 : {
@@ -119,8 +167,6 @@ const contatoDb = {
   },
 
   async confirmarContato(idContato) {
-    const prisma = new PrismaClient();
-
     return await prisma.contatos.update({
       where : {
         id : idContato
@@ -140,8 +186,6 @@ const contatoDb = {
   },
 
   async negarContato(idContato) {
-    const prisma = new PrismaClient();
-
     return await prisma.contatos.update({
       where : {
         id : idContato

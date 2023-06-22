@@ -12,7 +12,6 @@ const util = {
     console.log(usuarioLogadoTest);
   },
   getUsuarioLogadoTest : () => usuarioLogadoTest,
-  gambira : async (variavel) =>{} 
 };
 
 export { util }

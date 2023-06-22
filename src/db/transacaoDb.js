@@ -1,20 +1,117 @@
-import { PrismaClient } from '@prisma/client';
 import { util } from '../../src/util/index.js';
+import { prisma } from './index.js'
 
 const transacaoDb = {
-  async getByUsuario(idUsuario) {
-    const prisma = new PrismaClient();
-
+  async getByUsuario(idUsuario, quant, pesquisa) {
     return await prisma.transacoes.findMany({
       where : {
-        OR : [
-          { idEmissor : idUsuario },
-          { idReceptor : idUsuario },
+        AND : [
+          {
+            OR : [
+              { idEmissor : idUsuario },
+              { idReceptor : idUsuario },
+            ],
+          },
+          {
+            OR : [
+              {
+                AND : [
+                  { idEmissor : idUsuario },
+                  { 
+                    receptor : {
+                      nome : { 
+                        contains : pesquisa,
+                        mode: 'insensitive'
+                      } 
+                    },
+                  }
+                ],
+              },
+              {
+                AND : [
+                  { idReceptor : idUsuario },
+                  { 
+                    emissor : {
+                      nome : { 
+                        contains : pesquisa,
+                        mode: 'insensitive'
+                      } 
+                    }
+                  },
+                ],
+              },
+              { 
+                descricao : {
+                  contains : pesquisa,
+                  mode: 'insensitive'
+                },
+              }
+            ]
+          }
         ],
       },
       include : {
         emissor : true,
         receptor : true
+      },
+      orderBy : {
+        data : 'asc'
+      },
+      take: quant,
+    }).then(async (retorno) => {
+      await prisma.$disconnect();
+      return retorno;
+    });
+  },
+
+  async getByUsuarios(idLogado, idUser2){
+    return await prisma.transacoes.findMany({
+      where : {
+        AND : [
+          {
+            OR : [
+              {
+                AND : [
+                  {
+                    idEmissor : idLogado
+                  },
+                  {
+                    idReceptor : idUser2
+                  }
+                ] // AND
+              },
+              {
+                AND : [
+                  {
+                    idEmissor : idUser2
+                  },
+                  {
+                    idReceptor : idLogado
+                  }
+                ] // AND
+              },
+            ] // OR
+          },
+          {
+            confirmado : true
+          }
+        ]
+      },
+      include : {
+        emissor : {
+          select : {
+            id : true,
+            nome : true,
+            email : true
+          }
+        },
+        receptor : {
+          select : {
+            id : true,
+            nome : true,
+            email : true
+          }
+        }
       }
     }).then(async (retorno) => {
       await prisma.$disconnect();
@@ -22,16 +119,38 @@ const transacaoDb = {
     });
   },
   
-  async realizarTransacao(transacao) {
-    const prisma = new PrismaClient();
+  async findTransacao(idTransacao) {
+    return await prisma.transacoes.findUnique({
+      where : {
+        id : idTransacao,
+      },
+      include : {
+        emissor : {
+          select : {
+            id : true,
+            nome : true,
+            email : true
+          }
+        },
+        receptor : {
+          select : {
+            id : true,
+            nome : true,
+            email : true
+          }
+        }
+      }
+    });
+  },
 
+  async realizarTransacao(transacao, logado) {
     return await prisma.transacoes.create({
       data : {
         descricao : transacao.descricao,
         valor : transacao.valor,
         emissor : {
           connect : {
-            id : transacao.idEmissor
+            id : logado.id
           }
         },
         receptor : {
@@ -39,20 +158,21 @@ const transacaoDb = {
             id : transacao.idReceptor
           }
         },
-        data : util.getDataNow(),
+        data : (transacao.data? new Date(transacao.data) : util.getDataNow()),
         notificacao : {
           create : {
-            titulo : transacao.nomeEmissor + " solicitou uma transação",
+            titulo : logado.nome + " solicitou uma transação",
             descricao : transacao.descricao,
             data : util.getDataNow(),
-            idEmissor : transacao.idEmissor,
+            idEmissor : logado.id,
             idReceptor : transacao.idReceptor
           }
         }
       },
       include : {
         emissor : true ,
-        receptor : true
+        receptor : true,
+        notificacao: true,
       }
     }).then(async (retorno) => {
       await prisma.$disconnect();
@@ -61,8 +181,6 @@ const transacaoDb = {
   },
 
   async confirmarTransacao(idTransacao){
-    const prisma = new PrismaClient();
-
     return await prisma.transacoes.update({
       where : {
         id : idTransacao,
@@ -81,4 +199,4 @@ const transacaoDb = {
   },
 }
 
-export { transacaoDb }
+export { transacaoDb };
