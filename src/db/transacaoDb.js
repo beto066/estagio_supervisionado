@@ -55,7 +55,7 @@ const transacaoDb = {
         receptor : true
       },
       orderBy : {
-        data : 'asc'
+        data : 'desc'
       },
       take: quant,
     }).then(async (retorno) => {
@@ -178,6 +178,27 @@ const transacaoDb = {
       await prisma.$disconnect();
       return retorno;
     });
+  },
+
+  async transacaoMeses(idUsuario, start, end) {
+    return await prisma.transacoes.findMany({
+      where : {
+        AND: [
+          {
+            OR : [
+              { idEmissor : idUsuario },
+              { idReceptor : idUsuario },
+            ],
+          },
+          {
+            data: {
+              lte: new Date(end),
+              gte: new Date(start)
+            }
+          }
+        ]
+      }
+    })
   },
 
   async confirmarTransacao(idTransacao){

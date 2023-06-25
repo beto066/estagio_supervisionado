@@ -175,7 +175,7 @@ async function createTransacoes(){
     data : {
       descricao : "teste",
       valor : 3.99,
-      data : util.getDataNow(),
+      data : new Date('2023-02-23'),
       confirmado : true,
       emissor : {
         connect : {
@@ -191,7 +191,7 @@ async function createTransacoes(){
         create : {
           titulo : 'Carla solicitou uma transacao',
           descricao : 'teste1',
-          data : util.getDataNow(),
+          data : new Date('2023-02-23'),
           visualizado : false,
           idEmissor : 4,
           idReceptor : 1
@@ -203,7 +203,7 @@ async function createTransacoes(){
     data : {
       descricao : "teste",
       valor : 3.99,
-      data : util.getDataNow(),
+      data : new Date('2023-03-23'),
       confirmado : true,
       emissor : {
         connect : {
@@ -219,7 +219,7 @@ async function createTransacoes(){
         create : {
           titulo : 'Carla solicitou uma transacao',
           descricao : 'teste1',
-          data : util.getDataNow(),
+          data : new Date('2023-03-23'),
           visualizado : false,
           idEmissor : 4,
           idReceptor : 3
@@ -231,7 +231,7 @@ async function createTransacoes(){
     data : {
       descricao : "teste2",
       valor : 5.99,
-      data : util.getDataNow(),
+      data : new Date('2023-04-23'),
       confirmado : true,
       emissor : {
         connect : {
@@ -247,7 +247,7 @@ async function createTransacoes(){
         create : {
           titulo : 'Alice solicitou uma transacao',
           descricao : 'teste1',
-          data : util.getDataNow(),
+          data : new Date('2023-04-23'),
           visualizado : false,
           idEmissor : 1,
           idReceptor : 2
@@ -259,7 +259,7 @@ async function createTransacoes(){
     data : {
       descricao : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       valor : 39.99,
-      data : util.getDataNow(),
+      data : new Date('2023-05-23'),
       confirmado : true,
       emissor : {
         connect : {
@@ -275,7 +275,7 @@ async function createTransacoes(){
         create : {
           titulo : 'Beatriz solicitou uma transacao',
           descricao : 'teste1',
-          data : util.getDataNow(),
+          data : new Date('2023-05-23'),
           visualizado : false,
           idEmissor : 2,
           idReceptor : 4

@@ -24,7 +24,6 @@ const pub = new PubSub();
 const serverCleanup = useServer(
   { schema,
     context: async (ctx, msg, args) => {
-      console.log('sjfjk')
       return { ctx , pub };
     },
     onConnect: async (ctx) => {
@@ -60,7 +59,6 @@ const server = new apollo.ApolloServer({
       async serverWillStart() {
         return {
           async drainServer() {
-            console.log('arrpz');
             await serverCleanup.dispose();
           },
         };

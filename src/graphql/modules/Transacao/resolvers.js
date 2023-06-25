@@ -14,6 +14,13 @@ const resolvers = {
         });
       }
 
+      // const transacoes = await transacaoDb.transacaoMeses(contextValue.user.id, '2023-01-01', '2023-06-23');
+
+      // console.log(transacoes.filter((value) => value.data.getMonth() == 5));
+
+      // // console.log(transacoes);
+      // console.log(transacoes[0].data.getMonth());
+
       return transacaoDb.getByUsuario(contextValue.user.id, quant, pesquisa)
     },
 
